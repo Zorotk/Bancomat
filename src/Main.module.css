@@ -1,0 +1,8 @@
+* {
+  border-radius: 5px;
+}
+.root {
+  position: relative;
+  box-sizing: border-box;
+
+}

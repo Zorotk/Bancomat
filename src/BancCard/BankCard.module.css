@@ -1,0 +1,12 @@
+.bankCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
+  min-width: 100px;
+  max-width: 200px;
+  height: 100px;
+  background-color: #cccccc;
+  cursor: grab;
+}

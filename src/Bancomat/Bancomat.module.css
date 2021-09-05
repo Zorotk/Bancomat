@@ -1,0 +1,10 @@
+.bancomat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  min-width: 300px;
+  max-width: 600px;
+  height: 300px;
+  background-color: #cccccc;
+}
