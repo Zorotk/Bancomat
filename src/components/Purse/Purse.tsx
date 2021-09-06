@@ -1,45 +1,54 @@
-import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-
+import PurseState from "../../store/PurseState";
+import { observer } from "mobx-react-lite";
 import styled from "./Purse.module.css";
 
-const Purse = () => {
-  
-  const money = [
-    { value: 2000, count: 1 },
-    { value: 1000, count: 4 },
-    { value: 100, count: 2 },
-  ];
-  const [characters, updateCharacters] = useState(money);
+const Purse = observer(() => {
   function handleOnDragEnd(result: any) {
     if (!result.destination) return;
-    const items = Array.from(characters);
+    const items = Array.from(PurseState.limits);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-    updateCharacters(items);
+
+    PurseState.setLimits(items);
   }
 
+  // let nn = PurseState.limits.map(({ value, count }) => {
+  //   (PurseState.money += value * count)
+  // });
   return (
     <div className={styled.purse}>
       <h2>Кошелек</h2>
+      <h2>Доступно средств {PurseState.money}</h2>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="characters">
-          {(provided) => (
+          {(provided, snapshot) => (
             <ul
-              className="characters"
+              style={{
+                background: snapshot.isDraggingOver
+                  ? "lightgreen"
+                  : "lightgrey",
+                minHeight: "150px",
+                padding: "11px",
+              }}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {characters.map(({ value, count }, i) => {
+              {PurseState.limits.map(({ value, count }, i) => {
                 return (
                   <Draggable key={value} draggableId={`${value}`} index={i}>
-                    {(provided) => (
+                    {(provided, snapshot) => (
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <p className={styled.money}>
+                        <p
+                          className={styled.money}
+                          style={{
+                            background: snapshot.isDragging ? "#ccc" : "white",
+                          }}
+                        >
                           {value} * {count} шт
                         </p>
                       </li>
@@ -54,6 +63,6 @@ const Purse = () => {
       </DragDropContext>
     </div>
   );
-};
+});
 
 export default Purse;

@@ -7,7 +7,7 @@ class CardState {
     }
  
     setBalance(value:number) {
-       this.balance+=value
+       this.balance-=value
    }
 }
 

@@ -1,8 +1,22 @@
 * {
   border-radius: 5px;
+  box-sizing: border-box;
 }
 .root {
   position: relative;
-  box-sizing: border-box;
 
+
+  min-height: 100vh;
+}
+:root {
+  --black: #3b434e;
+  --gray-light: #ebebeb;
+  --gray: #a4a4a4;
+  --gray-dark: #6c7077;
+  --white: white;
+  --primary: #0f6e13;
+  --primary-hover: #12a165;
+  --green: #007b48;
+  --green-light: #c8f8e4;
+  --font-family: sans-serif;
 }

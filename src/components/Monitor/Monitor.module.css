@@ -1,0 +1,14 @@
+.monitor {
+  width: 200px;
+  height: 100px;
+  background-color: var(--white);
+  text-align: center;
+  margin: 10px;
+}
+.monitorPanel {
+  gap: 10px;
+  display: flex;
+  background-color: var(--gray-dark);
+  padding: 5px;
+  margin: 7px;
+}
