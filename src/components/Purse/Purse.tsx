@@ -9,13 +9,10 @@ const Purse = observer(() => {
     const items = Array.from(PurseState.limits);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
     PurseState.setLimits(items);
   }
 
-  // let nn = PurseState.limits.map(({ value, count }) => {
-  //   (PurseState.money += value * count)
-  // });
+ 
   return (
     <div className={styled.purse}>
       <h2>Кошелек</h2>
@@ -49,7 +46,7 @@ const Purse = observer(() => {
                             background: snapshot.isDragging ? "#ccc" : "white",
                           }}
                         >
-                          {value} * {count} шт
+                         {value} * {count} шт
                         </p>
                       </li>
                     )}

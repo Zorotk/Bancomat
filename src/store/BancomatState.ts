@@ -8,10 +8,9 @@ class BancomatState {
     inputValue = 0
     displayValue = ''
     auth = false
-    isValidpinCode=false
+    isValidpinCode=true
     errorAuth = 0
-    mode = ''
-    limits = { 5000: 4, 2000: 6, 1000: 9, 500: 8, 200: 2, 100: 5 };
+    limits:any = { 5000: 4, 2000: 6, 1000: 9, 500: 8, 200: 2, 100: 5 };
     inputMoney=0
     constructor() {
         makeAutoObservable(this)
@@ -19,7 +18,7 @@ class BancomatState {
     }
       
   
-   availableMoney = () =>Object.entries(this.limits).forEach(([k, v]) => (this.money += Number(k) * v));
+   availableMoney = () =>Object.entries(this.limits).forEach(([k, v]) => (this.money += Number(k) * Number(v)));
     
 
   
@@ -52,30 +51,48 @@ class BancomatState {
          this.inputMoney = value
     }
     setMode(value:string) {
-        this.mode = value
-        if (this.mode === 'issue') {
+  
+        if (value === 'issue') {
             if (this.inputMoney > this.money) {
                 this.displayMessage = 'Операция не может быть выполнена'
             }
-            else {              
-                if (this.bancomat(this.inputMoney, this.limits)) {
+            else {
+              let fn=this.bancomat(this.inputMoney, this.limits)
+                if (fn) {
+              
+                    
                     this.money -= this.inputMoney
                     CardState.setBalance(this.inputMoney)
-                    this.displayMessage = `выдача ${this.inputMoney} для продолжения Введите пин код`
-                    PurseState.setMoney(this.inputMoney)
-                    this.isValidpinCode = false
-                    this.inputMoney = 0
-                    
+                    this.displayMessage = `выдано ${this.inputMoney}, для продолжения Введите пин код`
+                  PurseState.setMoney(this.inputMoney)
+                   PurseState.addLimits(fn)
+                    // this.isValidpinCode = false
+                    // this.inputMoney = 0
+                   
                 } else {
                      this.displayMessage = 'нет купюр такого формата в наличии'
               }    
             }
-            return
+           
         }
-        // if (this.mode === 'introduction') {
-
-        //  }
-   
+      if (value === 'introduction') {
+          // console.log(Object.assign({},...PurseState.limits.map(({value,count})=>{return {[value]:count}})))
+    let limitsPurse: any = PurseState.limits.reduce((acc, { value, count }) => ({ ...acc, [value]: count }), {})
+             
+    let fn=this.bancomat(this.inputMoney, limitsPurse)
+        if (fn) {
+          PurseState.money -= this.inputMoney
+          this.money += this.inputMoney
+          CardState.setBalance(-this.inputMoney)
+          PurseState.subtractLimits(fn)
+                  for (let key in fn) {
+          this.limits[key]+=fn[key] 
+          }
+          this.displayMessage = `внесено ${this.inputMoney}, для продолжения Введите пин код`
+        }else {
+                     this.displayMessage = 'нет купюр такого формата в наличии'
+              }    
+         }   
    }
     setInputValue(value:number) {
              this.inputValue = value

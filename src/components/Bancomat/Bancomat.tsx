@@ -5,7 +5,8 @@ import Monitor from "../Monitor/Monitor";
 import styled from "./Bancomat.module.css";
 import { observer } from "mobx-react-lite";
 const Bancomat = observer(() => {
- 
+
+
   return (
     <div className={styled.bancomat}>
       <Monitor />

@@ -6,6 +6,7 @@
   margin: 10px;
   max-width: 400px;
   background-color: var(--gray-light);
+  text-align: center;
 }
 .money {
   margin: 11px;
