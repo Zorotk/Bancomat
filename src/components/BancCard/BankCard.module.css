@@ -8,5 +8,10 @@
   max-width: 200px;
   height: 100px;
   background-color: #cccccc;
-  cursor: grab;
+  cursor: pointer;
+}
+.pin{
+  width: 300px;
+  height: 300px;
+  margin-left: 500px;
 }
