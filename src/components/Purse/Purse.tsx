@@ -2,6 +2,7 @@ import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import PurseState from "../../store/PurseState";
 import {observer} from "mobx-react-lite";
 import styled from "./Purse.module.css";
+import React from "react";
 
 const Purse = observer(() => {
     function handleOnDragEnd(result: any) {
@@ -11,6 +12,7 @@ const Purse = observer(() => {
         items.splice(result.destination.index, 0, reorderedItem);
         PurseState.setLimits(items);
     }
+
 
     return (
         <div className={styled.purse}>
@@ -24,8 +26,7 @@ const Purse = observer(() => {
                                 background: snapshot.isDraggingOver
                                     ? "lightgreen"
                                     : "lightgrey",
-                                minHeight: "150px",
-                                padding: "11px",
+
                             }}
                             {...provided.droppableProps}
                             ref={provided.innerRef}

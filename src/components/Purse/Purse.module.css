@@ -1,12 +1,13 @@
 .purse {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin: 10px;
+  padding: 10px;
   max-width: 400px;
   background-color: var(--gray-light);
   text-align: center;
+  height: 350px;
 }
 .money {
   margin: 11px;

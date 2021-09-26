@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 
-interface P {
+interface MoneyCount {
     value: number,
     count: number
 }
@@ -21,7 +21,7 @@ class PurseState {
         this.availableMoney()
     }
 
-    setLimits(value: P[]) {
+    setLimits(value: MoneyCount[]) {
         this.limits = value
     }
 

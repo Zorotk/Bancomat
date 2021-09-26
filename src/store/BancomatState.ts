@@ -7,11 +7,10 @@ class BancomatState {
     pinCode = 123
     displayMessage = 'вставьте карточку'
     inputValue = 0
-    displayValue = ''
     auth = false
     isValidpinCode = false
     errorAuth = 0
-    limits: Record<number, number> = {5000: 4, 2000: 6, 1000: 9, 500: 8, 200: 2, 100: 5};
+    limits: Record<string, number> = {5000: 4, 2000: 6, 1000: 9, 500: 8, 200: 2, 100: 5};
     inputMoney = 0
 
     constructor() {
@@ -72,7 +71,6 @@ class BancomatState {
                     this.displayMessage = 'нет купюр такого формата в наличии'
                 }
             }
-
         }
         if (value === 'introduction') {
             // console.log(Object.assign({},...PurseState.limits.map(({value,count})=>{return {[value]:count}})))
@@ -85,7 +83,7 @@ class BancomatState {
                 CardState.setBalance(-this.inputMoney)
                 PurseState.subtractLimits(fn)
                 for (let key in fn) {
-                    this.limits[key as any] += fn[key]
+                    this.limits[+key] += fn[key]
                 }
                 this.displayMessage = `внесено ${this.inputMoney}, для продолжения Введите пин код`
                 this.isValidpinCode = false
@@ -94,6 +92,11 @@ class BancomatState {
                 this.displayMessage = 'нет купюр такого формата в наличии'
             }
         }
+    }
+
+    setNotPinCode=()=> {
+        this.auth = true
+        this.isValidpinCode = true
     }
 
     setInputValue(value: number) {

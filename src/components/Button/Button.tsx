@@ -1,22 +1,29 @@
 import styles from "./Button.module.css";
 
 import cn from "classnames";
-
+import { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+interface ButtonProps
+  extends DetailedHTMLProps<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
+types:string
+}
 export const Button = ({
-  type,
+  types,
   children,
   className,
   ...props
-}: any): JSX.Element => {
+}: ButtonProps): JSX.Element => {
   return (
-    <div
+    <button
       className={cn(styles.button, className, {
-        [styles.primary]: type === "primary",
-        [styles.success]: type === "success",
+        [styles.primary]: types === "primary",
+        [styles.success]: types === "success",
       })}
       {...props}
     >
       {children}
-    </div>
+    </button>
   );
 };
