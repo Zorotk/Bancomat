@@ -8,12 +8,12 @@ interface MoneyCount {
 class PurseState {
     money = 0
     limits = [
-        {value: 5000, count: 0},
-        {value: 2000, count: 1},
-        {value: 1000, count: 4},
-        {value: 500, count: 0},
-        {value: 200, count: 0},
-        {value: 100, count: 2},
+        {value: 5000, count: 4},
+        {value: 2000, count: 8},
+        {value: 1000, count: 15},
+        {value: 500, count: 16},
+        {value: 200, count: 23},
+        {value: 100, count: 42},
     ];
 
     constructor() {

@@ -18,55 +18,49 @@ class BancomatState {
         this.availableMoney()
     }
 
-
     availableMoney = () => Object.entries(this.limits).forEach(([k, v]) => (this.money += Number(k) * Number(v)));
 
-
     bancomat = (ammount: number, limits: Record<string, number>): Record<string, number> | undefined => {
-        const notes: string[] = Object.keys(limits).sort((a, b) => Number(b) - Number(a));
-
-        for (let i = 0; i < notes.length; i++) {
-            const note = Number(notes[i])
-
-            if (ammount - note < 0 || limits[note] < 1) {
-                continue;
+        const notes: string[] = Object.keys(limits);
+        let result: Record<string, number> = {}
+        let right = notes.length - 1
+        while (0 <= right) {
+            if (ammount === 0) {
+                return result
             }
-            if (ammount - note === 0 && limits[note] > 0) {
-                limits[note] -= 1;
-                return {[note]: 1};
+            if (ammount < Number(notes[0])) {
+                console.log('нет сдачи')
+                return
             }
-
-            limits[note] -= 1;
-            const step = this.bancomat(ammount - note, limits);
-            if (step) {
-                step[note] = step[note] + 1 || 1;
-                return step;
+            let note = Number(notes[right])
+            if (note > ammount || limits[note] === 0) {
+                right--
+            } else {
+                ammount -= note
+                limits[note] -= 1
+                result[note] = result[note] + 1 || 1
             }
-            limits[note] += 1;
         }
-
-    };
+    }
 
     setMoney(value: number) {
         this.inputMoney = value
     }
 
     setMode(value: string) {
-
         if (value === 'issue') {
             if (this.inputMoney > this.money) {
                 this.displayMessage = 'Операция не может быть выполнена'
             } else {
                 let fn = this.bancomat(this.inputMoney, this.limits)
                 if (fn) {
-                    this.money -= this.inputMoney
                     CardState.setBalance(this.inputMoney)
-                    this.displayMessage = `выдано ${this.inputMoney}, для продолжения Введите пин код`
+                    this.money -= this.inputMoney
                     PurseState.setMoney(this.inputMoney)
                     PurseState.addLimits(fn)
+                    this.displayMessage = `выдано ${this.inputMoney}, для продолжения Введите пин код`
                     this.isValidpinCode = false
                     this.inputMoney = 0
-
                 } else {
                     this.displayMessage = 'нет купюр такого формата в наличии'
                 }
@@ -74,27 +68,30 @@ class BancomatState {
         }
         if (value === 'introduction') {
             // console.log(Object.assign({},...PurseState.limits.map(({value,count})=>{return {[value]:count}})))
-            let limitsPurse = PurseState.limits.reduce((acc, {value, count}) => ({...acc, [value]: count}), {})
-
-            let fn = this.bancomat(this.inputMoney, limitsPurse)
-            if (fn) {
-                PurseState.money -= this.inputMoney
-                this.money += this.inputMoney
-                CardState.setBalance(-this.inputMoney)
-                PurseState.subtractLimits(fn)
-                for (let key in fn) {
-                    this.limits[+key] += fn[key]
-                }
-                this.displayMessage = `внесено ${this.inputMoney}, для продолжения Введите пин код`
-                this.isValidpinCode = false
-                this.inputMoney = 0
+            if (this.inputMoney > PurseState.money) {
+                this.displayMessage = 'Операция не может быть выполнена'
             } else {
-                this.displayMessage = 'нет купюр такого формата в наличии'
+                let limitsPurse = PurseState.limits.reduce((acc, {value, count}) => ({...acc, [value]: count}), {})
+                let fn = this.bancomat(this.inputMoney, limitsPurse)
+                if (fn) {
+                    PurseState.money -= this.inputMoney
+                    this.money += this.inputMoney
+                    CardState.setBalance(-this.inputMoney)
+                    for (let key in fn) {
+                        this.limits[key] += fn[key]
+                    }
+                    PurseState.subtractLimits(fn)
+                    this.displayMessage = `внесено ${this.inputMoney}, для продолжения Введите пин код`
+                    this.isValidpinCode = false
+                    this.inputMoney = 0
+                } else {
+                    this.displayMessage = 'нет купюр такого формата в наличии'
+                }
             }
         }
     }
 
-    setNotPinCode=()=> {
+    setNotPinCode = () => {
         this.auth = true
         this.isValidpinCode = true
     }

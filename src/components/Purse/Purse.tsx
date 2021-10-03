@@ -26,7 +26,8 @@ const Purse = observer(() => {
                                 background: snapshot.isDraggingOver
                                     ? "lightgreen"
                                     : "lightgrey",
-
+                                minHeight: "300px",
+                                padding: "11px",
                             }}
                             {...provided.droppableProps}
                             ref={provided.innerRef}
