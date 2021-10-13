@@ -29,7 +29,6 @@ class BancomatState {
                 return result
             }
             if (ammount < Number(notes[0])) {
-                console.log('нет сдачи')
                 return
             }
             let note = Number(notes[right])
@@ -52,8 +51,11 @@ class BancomatState {
             if (this.inputMoney > this.money) {
                 this.displayMessage = 'Операция не может быть выполнена'
             } else {
-                let fn = this.bancomat(this.inputMoney, this.limits)
-                if (fn) {
+                let fn = this.bancomat(this.inputMoney, Object.assign({}, this.limits))
+                if (!fn) {
+                    this.displayMessage = 'нет сдачи'
+                } else {
+                    Object.entries(fn).forEach(([k, v]) => this.limits[k] -= v)
                     CardState.setBalance(this.inputMoney)
                     this.money -= this.inputMoney
                     PurseState.setMoney(this.inputMoney)
@@ -61,13 +63,10 @@ class BancomatState {
                     this.displayMessage = `выдано ${this.inputMoney}, для продолжения Введите пин код`
                     this.isValidpinCode = false
                     this.inputMoney = 0
-                } else {
-                    this.displayMessage = 'нет купюр такого формата в наличии'
                 }
             }
         }
         if (value === 'introduction') {
-            // console.log(Object.assign({},...PurseState.limits.map(({value,count})=>{return {[value]:count}})))
             if (this.inputMoney > PurseState.money) {
                 this.displayMessage = 'Операция не может быть выполнена'
             } else {
@@ -85,7 +84,7 @@ class BancomatState {
                     this.isValidpinCode = false
                     this.inputMoney = 0
                 } else {
-                    this.displayMessage = 'нет купюр такого формата в наличии'
+                    this.displayMessage = 'нет сдачи'
                 }
             }
         }

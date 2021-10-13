@@ -18,7 +18,8 @@ const Bancomat = observer(() => {
           {value} * {count} шт
         </div>
       ))}
-      <Button onClick={BancomatState.setNotPinCode} types={'success'}>пинкод</Button>
+        Купюр {Object.values(BancomatState.limits).reduce((acc, el) => acc + el)} шт
+      {/*<Button onClick={BancomatState.setNotPinCode} types={'success'}>пинкод</Button>*/}
     </div>
   );
 });

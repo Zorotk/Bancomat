@@ -4,6 +4,7 @@ import {observer} from "mobx-react-lite";
 import styled from "./Purse.module.css";
 import React from "react";
 
+
 const Purse = observer(() => {
     function handleOnDragEnd(result: any) {
         if (!result.destination) return;
@@ -55,6 +56,7 @@ const Purse = observer(() => {
                                 );
                             })}
                             {provided.placeholder}
+                            Купюр {PurseState.limits.reduce((acc, el) => acc + el.count, 0)} шт
                         </ul>
                     )}
                 </Droppable>
