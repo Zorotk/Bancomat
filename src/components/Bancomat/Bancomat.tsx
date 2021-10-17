@@ -4,7 +4,7 @@ import BancomatState from "../../store/BancomatState";
 import Monitor from "../Monitor/Monitor";
 import styled from "./Bancomat.module.css";
 import { observer } from "mobx-react-lite";
-import {Button} from "../Button/Button";
+
 
 const Bancomat = observer(() => {
 
@@ -19,7 +19,6 @@ const Bancomat = observer(() => {
         </div>
       ))}
         Купюр {Object.values(BancomatState.limits).reduce((acc, el) => acc + el)} шт
-      {/*<Button onClick={BancomatState.setNotPinCode} types={'success'}>пинкод</Button>*/}
     </div>
   );
 });
