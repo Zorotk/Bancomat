@@ -8,9 +8,9 @@ import BankCard from "./components/BancCard/BankCard";
 export const Main = () => {
   return (
     <div className={styled.root}>
+      <BankCard />
       <Purse />
       <Bancomat />
-      <BankCard />
     </div>
   );
 };

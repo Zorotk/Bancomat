@@ -14,6 +14,7 @@ class PurseState {
         {value: 500, count: 16},
         {value: 200, count: 23},
         {value: 100, count: 42},
+        {value: 50, count: 0},
     ];
 
     constructor() {
