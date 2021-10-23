@@ -9,6 +9,57 @@ import { Button } from "../Button/Button";
 const Bancomat = observer(() => {
   const buttons = "9876543210".split("");
 
+  let arr = [4, 5, 1, 3, 2].sort((a, b) => b - a);
+  let r = 1;
+  let l = 0;
+  function equalProportion(amount: number) {
+    while (true) {
+      if (arr[l] < arr[r]) {
+        if (arr[arr.length - 2] === 0 && arr[arr.length - 1] === 1) {
+          arr[r] = 0;
+        }
+        l++;
+        r++;
+      } else {
+        if (arr[l] >= arr[r]) {
+          arr[l] -= 1;
+        }
+        if (arr[l] === arr[r]) {
+          l = 0;
+          r = 1;
+        }
+        amount--;
+        if (amount === 0) return arr;
+      }
+    }
+  }
+  console.log(equalProportion(11));
+
+  // let i = 0;
+
+  // function equalProportion(amount:number) {
+  //   while (i < arr.length) {
+  //     if (i > 0) {
+  //       if (arr[i] > arr[i + 1]) {
+  //         arr[i - 1] -= 1;
+  //         amount -= 1;
+  //         i = 0;
+  //         if (amount === 0) return arr;
+  //       }
+  //       if (arr[i] < arr[i + 1]) {
+  //         arr[i + 1] -= 1;
+  //         amount -= 1;
+  //         if (amount === 0) return arr;
+  //       }
+  //     }
+  //     i++;
+  //     if (amount === 0) {
+  //       return arr;
+  //     }
+  //   }
+  // }
+  // console.log(equalProportion(10));
+
   return (
     <div className={styled.bancomat}>
       <Monitor />

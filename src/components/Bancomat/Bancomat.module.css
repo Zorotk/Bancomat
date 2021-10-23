@@ -1,5 +1,4 @@
 .bancomat {
-  /* position: relative; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,9 +9,6 @@
   background-color: var(--gray-light);
 }
 .buttons {
-  /* position: absolute;
-  top:50%;
-  left: 50%; */
   display: flex;
   justify-content: center;
   align-items: center;
