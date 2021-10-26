@@ -114,7 +114,7 @@ class BancomatState {
             if (this.inputMoney > this.money) {
                 this.displayMessage = 'Операция не может быть выполнена'
             } else {
-                let fn = this.bancomat(this.inputMoney, Object.assign({}, this.limits))
+                let fn = this.bancomat(this.inputMoney, Object.assign({}, this.limits))    
                 if (!fn) {
                     this.displayMessage = 'нет сдачи'
                 } else {
@@ -124,8 +124,8 @@ class BancomatState {
                     PurseState.setMoney(this.inputMoney)
                     PurseState.addLimits(fn)
                     this.displayMessage = `выдано ${this.inputMoney} 
-                    ${Object.entries(fn).reduce((acc,[k,v]) => { return acc+=`${k} * ${v} шт `
-                     },'')}, для продолжения Введите пин код`
+                    ${Object.entries(fn).reduce((acc, [k, v]) => acc += `${k} * ${v} шт `
+                        , '')}, для продолжения Введите пин код`
                     this.isValidpinCode = false
                     this.inputMoney = 0
                 }
@@ -187,7 +187,7 @@ class BancomatState {
             this.displayMessage = 'не верно, повторите пинкод'
             this.errorAuth = this.errorAuth + 1
         }
-        this.inputValue = '0'
+        this.inputValue = ''
     }
 }
 

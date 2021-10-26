@@ -9,31 +9,36 @@ import { Button } from "../Button/Button";
 const Bancomat = observer(() => {
   const buttons = "9876543210".split("");
 
-  let arr = [4, 5, 1, 3, 2].sort((a, b) => b - a);
-  let r = 1;
-  let l = 0;
+  let arr = [5, 5, 5, 5, 5].sort((a, b) => b - a);
+
+  let i = 0;
   function equalProportion(amount: number) {
-    while (true) {
-      if (arr[l] < arr[r]) {
-        if (arr[arr.length - 2] === 0 && arr[arr.length - 1] === 1) {
-          arr[r] = 0;
-        }
-        l++;
-        r++;
-      } else {
-        if (arr[l] >= arr[r]) {
-          arr[l] -= 1;
-        }
-        if (arr[l] === arr[r]) {
-          l = 0;
-          r = 1;
+    if (amount === 0) return arr;
+    while (amount !== 0) {
+      if (arr[i] < arr[i + 1] || arr[i] === 0) i++;
+      else {
+        if (arr[i] >= arr[i + 1]) arr[i] -= 1;
+        if (arr[i] === arr[i + 1]) i = 0;
+        if (i === arr.length - 1) {
+          arr[i] -= 1;
+          i = 0;
         }
         amount--;
-        if (amount === 0) return arr;
       }
     }
+    return arr;
   }
-  console.log(equalProportion(11));
+
+  console.log(equalProportion(20));
+
+  // const equalProportion = (amount: number) => {
+  //   while (arr.sort((a, b) => b - a) && amount > 0 && arr[0] > 0) {
+  //     amount--;
+  //     arr[0]--;
+  //   }
+  //   return arr;
+  // };
+  // console.log(equalProportion(20));
 
   // let i = 0;
 
