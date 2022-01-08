@@ -72,8 +72,14 @@ class BancomatState {
     constructor() {
         makeAutoObservable(this)
         this.availableMoney()
+        this.isAuth()
     }
 
+    isAuth = () => {
+        let getItem = localStorage.getItem('auth')
+        if (getItem)  this.auth = JSON.parse(getItem)      
+    }
+    
     availableMoney = () => Object.entries(this.limits).forEach(([k, v]) => (this.money += Number(k) * Number(v)));
 
     bancomat = (ammount: number, limits: Record<string, number>): Record<string, number> | undefined => {
@@ -165,6 +171,7 @@ class BancomatState {
     }
 
     setAuth(value: boolean) {
+        localStorage.setItem('auth', JSON.stringify(value))
         this.auth = value
         this.displayMessage = this.auth ? "Введите пинкод" : "вставьте карточку"
     }

@@ -4,12 +4,26 @@ import styled from "./Monitor.module.css";
 import { observer } from "mobx-react-lite";
 import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
+import CardState from "../../store/CardState";
 
 const Monitor = observer(() => {
   return (
     <>
       {!bancomatStore.isValidpinCode ? (
         <div>
+          <div
+            onDragOver={(e) => CardState.dragOverHandler(e)}
+            onDrop={(e) => CardState.dropHandler(e)}
+            className={styled.monitorCard}
+            style={{
+              border: CardState.onDrag
+                ? "1px solid var(--primary)"
+                : "1px solid var(--gray)",
+            }}
+          >
+            вставить карточку
+          </div>
+
           <Input
             type="number"
             value={bancomatStore.inputValue}

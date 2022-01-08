@@ -5,6 +5,10 @@
   text-align: center;
   margin: 10px;
 }
+.monitorCard {
+  text-align: center;
+  height: 30px;
+}
 .monitorPanel {
   gap: 10px;
   display: flex;
